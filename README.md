@@ -14,7 +14,7 @@ python -m venv .venv
 ```
 Linux: `source .venv/bin/activate`
 
-Windows: `source .venv/Scripts/activate.bat`
+Windows: `.venv\Scripts\activate.bat`
 ```
 pip install requests
 ```
