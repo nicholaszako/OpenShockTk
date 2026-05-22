@@ -1,7 +1,7 @@
 # This module is for v2 "Shockers" API
 # https://api.openshock.app/scalar/viewer/#version-2/tag/shockers/POST/2/shockers/control
 
-from requests import Request, Session
+from requests import Request, PreparedRequest, Session
 
 class Control():
 
@@ -56,8 +56,8 @@ class Control():
             print(f'Control message sent! Got status {res.status_code}.')
             return True
         else:
-            print('Error sending control message. Got status ' +
-                {res.status_code} + '.')
+            print('Error sending control message. Got status ',
+                res.status_code, '.')
             return False
 
 
