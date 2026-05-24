@@ -25,6 +25,9 @@ class Shockers:
 
         print(f'Got list of shockers. Got status {res.status_code}.')
 
-        res_data = res.json()['data'][0]    # First hub json
-        shocker_list = res_data['shockers']
+        res_data = res.json()['data']
+        shocker_list = []   # Flattened list of shockers across all hubs
+        for hub in res_data:
+            shocker_list.extend(hub['shockers'])
+
         return shocker_list   

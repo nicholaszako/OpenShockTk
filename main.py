@@ -1,8 +1,7 @@
 import sys
 import configparser
 import tomllib
-from tkinter import *
-from tkinter import ttk
+from tkinter import Tk
 from pathlib import Path
 
 from gui.view import View
