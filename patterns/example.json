@@ -1,0 +1,5 @@
+[
+    {"id": "123", "type": "Vibrate", "intensity": 50, "duration": 1000, "sleep": 1000},
+    {"id": "123", "type": "Shock", "intensity": 10, "duration": 500, "sleep": 500},
+    {"id": "123", "type": "Vibrate", "intensity": 30, "duration": 1000, "sleep": 500}
+]
