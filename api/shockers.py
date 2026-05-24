@@ -1,7 +1,7 @@
 # This module is for v1 "Shockers" API
 # https://api.openshock.app/scalar/viewer/#version-1/tag/shockers
-
 import requests
+
 
 class Shockers:
     
@@ -15,19 +15,16 @@ class Shockers:
             'Content-Type': 'application/json',
             'Open-Shock-Token': self.token
         }
-
         res = requests.get('https://api.openshock.app/1/shockers/own', 
                      headers=headers)
-
         # Raise exception for any non-ok response before trying to parse body
         if not res.ok:
             res.raise_for_status()
-
+        # Otherwise, continue by parsing list
         print(f'Got list of shockers. Got status {res.status_code}.')
-
         res_data = res.json()['data']
         shocker_list = []   # Flattened list of shockers across all hubs
         for hub in res_data:
             shocker_list.extend(hub['shockers'])
-
         return shocker_list   
+

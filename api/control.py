@@ -1,7 +1,7 @@
-# This module is for v2 "Shockers" API
+# This module is for v2 "Shockers" Control API
 # https://api.openshock.app/scalar/viewer/#version-2/tag/shockers/POST/2/shockers/control
-
 from requests import Request, PreparedRequest, Session
+
 
 class Control():
 
@@ -18,14 +18,14 @@ class Control():
         MIN_DURATION = 300
         MAX_DURATION = 65535 
 
-        # validating parameters
+        # Validating parameters
         if(not type_ in VALID_TYPES):
             raise Exception(f'Invalid control type: {type_}')
         if(intensity < MIN_INTENSITY or intensity > MAX_INTENSITY):
             raise Exception(f'Intensity {intensity} out of range')
         if(duration < MIN_DURATION or duration > MAX_DURATION):
             raise Exception(f'Duration {duration} out of range')
-
+        # Prep request
         url = 'https://api.openshock.app/2/shockers/control'
         json = {
             'shocks': [
