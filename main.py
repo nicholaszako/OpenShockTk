@@ -6,6 +6,7 @@ from pathlib import Path
 
 from gui.view import View
 from api import Api
+from utils import pattern
 
 
 def main() -> int:
@@ -34,11 +35,15 @@ def main() -> int:
     if f'"{token}"' == api_defaults['token'] or token == '':
         print('API token not set! Exiting...')
         return 1
+    api_client = Api(token, user_agent)
+    PATTERNS_PATH = Path('patterns')
+    pattern_files = [pf for pf in PATTERNS_PATH.iterdir()]
+    patterns = [pattern.get_pattern_from_file(pf, api_client, True) 
+                for pf in pattern_files]
     
     # Tkinter setup
     root = Tk()
-    api_client = Api(token, user_agent)
-    View(root, api_client)
+    View(root, api_client, patterns)
     root.mainloop()
 
     return 0
