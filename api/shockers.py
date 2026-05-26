@@ -21,7 +21,7 @@ class Shockers:
         if not res.ok:
             res.raise_for_status()
         # Otherwise, continue by parsing list
-        print(f'Got list of shockers. Got status {res.status_code}.')
+        print(f'[{res.status_code}] Got list of shockers.')
         res_data = res.json()['data']
         shocker_list = []   # Flattened list of shockers across all hubs
         for hub in res_data:

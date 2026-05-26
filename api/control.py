@@ -53,11 +53,10 @@ class Control():
 
         # Handle response
         if res.ok:
-            print(f'Control message sent! Got status {res.status_code}.')
+            print(f'[{res.status_code}] Control message sent!')
             return True
         else:
-            print('Error sending control message. Got status ',
-                res.status_code, '.')
+            print(f'[{res.status_code}] Error sending control message.')
             return False
 
 
