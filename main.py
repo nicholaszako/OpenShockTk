@@ -1,4 +1,5 @@
 import sys
+import os
 import configparser
 import tomllib
 from tkinter import Tk
@@ -36,7 +37,10 @@ def main() -> int:
         print('API token not set! Exiting...')
         return 1
     api_client = Api(token, user_agent)
+
     PATTERNS_PATH = Path('patterns')
+    if not PATTERNS_PATH.exists():
+        os.mkdir(PATTERNS_PATH)
     pattern_files = [pf for pf in PATTERNS_PATH.iterdir()]
     patterns = [pattern.get_pattern_from_file(pf, api_client, True) 
                 for pf in pattern_files]
