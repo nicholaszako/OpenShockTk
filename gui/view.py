@@ -8,6 +8,7 @@ class View:
     def __init__(self, root: Tk, api_client, patterns=[]):
         self.root = root
         self.api = api_client
+        self.patterns = patterns
         self.shockers = self.get_shockers()     # List of dicts
         self.shocker_names = [s['name'] for s in self.shockers]
         # tkinter variables for current selection
@@ -65,12 +66,14 @@ class View:
         # Patterns
         pattern_frm = ttk.LabelFrame(main_frm, text='Patterns')
         pattern_frm.grid(column=0, row=1, padx=10, pady=10, sticky='ew')
-        self.load_patterns(pattern_frm, patterns)
+        self.load_patterns(pattern_frm)
         # Footer
         (ttk.Separator(main_frm, orient='horizontal')
             .grid(column=0, row=98, sticky='ew'))
         footer_frm=ttk.Frame(main_frm, padding=10)
         footer_frm.grid(column=0, row=99)
+        (ttk.Button(footer_frm, text='STOP ALL', command=self.stop_all)
+            .grid(column=0, row=0, sticky='e'))
         (ttk.Button(footer_frm, text='Quit', command=self.root.destroy)
             .grid(column=1, row=0, sticky='w'))
 
@@ -101,19 +104,29 @@ class View:
         c.send(prepped)
 
     # Load list of patterns into view as individual buttons
-    def load_patterns(self, master, patterns: list):
+    def load_patterns(self, master):
         # Using constants for size may cause scaling issues
         BUTTONS_PER_ROW = 3
         PAD_X = 5
         PAD_Y = 5
         BTN_WIDTH = 8
-        for i in range(0, len(patterns)):
+        for i in range(0, len(self.patterns)):
             col = i % BUTTONS_PER_ROW
             row = floor(i / BUTTONS_PER_ROW)
-            p = patterns[i]
+            p = self.patterns[i]
             p_btn = ttk.Button(master, text=p.name, command=p.start, 
                                width=BTN_WIDTH)
             p_btn.grid(column=col, row=row, padx=PAD_X, pady=PAD_Y)
-        return 0
+        return True
 
+    def stop_all(self):
+        # Cancel patterns first so nothing proceeds the stop message
+        for p in self.patterns:
+            p.stop()
+        c = self.api.control
+        # Send stop message to all shockers
+        for s in self.shockers:
+            prepped = c.get_prepared_req(s['id'], 'Stop', 0, 300)
+            c.send(prepped)
+        return True
 
