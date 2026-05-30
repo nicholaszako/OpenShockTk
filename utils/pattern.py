@@ -13,12 +13,6 @@ class Pattern:
         self.name = name
         self.thread = None
         self._stop_event = Event()
-        if not self.validate():
-            raise Exception('Invalid pattern')
-        
-    def validate(self):
-        # STUB
-        return True
     
     def start(self):
         if self.thread:

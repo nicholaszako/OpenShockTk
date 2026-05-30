@@ -64,9 +64,10 @@ class View:
         (ttk.Button(ctrl_frm, text='Send', command=self.send)
             .grid(column=0, row=3, pady=5))
         # Patterns
-        pattern_frm = ttk.LabelFrame(main_frm, text='Patterns')
-        pattern_frm.grid(column=0, row=1, padx=10, pady=10, sticky='ew')
-        self.load_patterns(pattern_frm)
+        if patterns:
+            pattern_frm = ttk.LabelFrame(main_frm, text='Patterns')
+            pattern_frm.grid(column=0, row=1, padx=10, pady=10, sticky='ew')
+            self.load_patterns(pattern_frm)
         # Footer
         (ttk.Separator(main_frm, orient='horizontal')
             .grid(column=0, row=98, sticky='ew'))
