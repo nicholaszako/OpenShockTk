@@ -15,16 +15,16 @@
             "intensity": 30,
             "duration": 1000
         },
-        "sleep": 500
+        "sleep": 2000
     },
     {
         "request": {
             "id": "123",
             "type_": "Vibrate",
-            "intensity": 30,
-            "duration": 1000
+            "intensity": 50,
+            "duration": 500
         },
-        "sleep": 500
+        "sleep": 3000
     }
 
 ]
