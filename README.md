@@ -59,15 +59,22 @@ This pattern will vibrate device `123` every 2 seconds at an increasing intensit
 
 ## Installation
 
+### Linux
+
 ```
 git clone https://github.com/nicholaszako/OpenShockTk
 cd OpenShockTk
-python -m venv .venv
+chmod +x ./start.sh
+./start.sh
 ```
-Linux: `source .venv/bin/activate`
 
-Windows: `.venv\Scripts\activate.bat`
+### Windows
+
 ```
-pip install requests
+git clone https://github.com/nicholaszako/OpenShockTk
+cd OpenShockTk
+python3 .venv venv
+.venv\Scripts\activate.bat
+pip install -r requirements.txt
+python -m main
 ```
-Run with `python -m main`
