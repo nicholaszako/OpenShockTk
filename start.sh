@@ -5,7 +5,7 @@ RED="\033[31m"
 NC="\033[0m"
 
 # No venv > first-time setup
-if ! [ -d ".venv/bin/activate" ]; then
+if ! [ -e ".venv/bin/activate" ]; then
     echo "venv not found. Running setup."
 
     # Check for python
@@ -24,4 +24,5 @@ if ! [ -d ".venv/bin/activate" ]; then
 fi
 
 source .venv/bin/activate
+cd openshocktk
 python -m main

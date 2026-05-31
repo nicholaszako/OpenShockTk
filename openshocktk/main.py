@@ -14,7 +14,7 @@ def main() -> int:
     print('Starting OpenShockTk')
     # Setup and load config
     config = configparser.ConfigParser()
-    config_path = Path('config.toml')
+    config_path = Path('../config.toml')
     api_defaults = {
         'token': '"your_token_here"',
         'user_agent': '"OpenShockTk/0.1"'
@@ -38,7 +38,7 @@ def main() -> int:
         return 1
     api_client = Api(token, user_agent)
 
-    PATTERNS_PATH = Path('patterns')
+    PATTERNS_PATH = Path('../patterns')
     if not PATTERNS_PATH.exists():
         os.mkdir(PATTERNS_PATH)
     pattern_files = [pf for pf in PATTERNS_PATH.iterdir()]
