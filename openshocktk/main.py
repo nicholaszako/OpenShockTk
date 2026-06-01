@@ -17,7 +17,7 @@ def main() -> int:
     config_path = Path('../config.toml')
     api_defaults = {
         'token': '"your_token_here"',
-        'user_agent': '"OpenShockTk/0.1"'
+        'user_agent': '"OpenShockTk/0.2"'
     }
     # Create config from defaults if none exists
     if not config_path.exists():
