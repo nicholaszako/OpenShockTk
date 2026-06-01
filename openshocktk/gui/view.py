@@ -21,7 +21,7 @@ class View:
         self.duration_v.trace_add('write', self.on_duration_change)
         # String representation of current intensity
         self.intensity_strv = StringVar(value='10')
-        self.duration_strv = StringVar(value='1000')
+        self.duration_strv = StringVar(value='100')
 
         # Ready to load gui elements
         self.root.title("OpenShockTk")
