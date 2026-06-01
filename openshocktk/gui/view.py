@@ -15,7 +15,7 @@ class View:
         self.shocker_name_v = StringVar(value=self.shocker_names[0])
         self.type_v = StringVar(value='Stop')
         self.intensity_v = IntVar(value=10)
-        self.duration_v = IntVar(value=1000)    # milliseconds
+        self.duration_v = IntVar(value=100)    # in tenths of seconds
         # Tracking intensity & duration to set label value on update
         self.intensity_v.trace_add('write', self.on_intensity_change)
         self.duration_v.trace_add('write', self.on_duration_change)
@@ -31,26 +31,30 @@ class View:
 
         # Controller frame
         ctrl_frm = ttk.LabelFrame(main_frm, text='Controller')
-        ctrl_frm.grid(column=0, row=0, padx=10, pady=10, sticky='ew')
+        ctrl_frm.grid(column=0, row=0, padx=10, pady=5, sticky='ew')
         ttk.Combobox(ctrl_frm, textvariable=self.shocker_name_v, 
                      values=self.shocker_names).grid(column=0, row=0)
         # Scales frame
         scales_frm = ttk.Frame(ctrl_frm, padding=10)
         scales_frm.grid(column=0, row=1)
         # Intensity
-        (ttk.Label(scales_frm, text='Intensity:')
-            .grid(column=0, row=0, sticky="ew"))
-        (ttk.Scale(scales_frm, from_=0, to=100, variable=self.intensity_v)
+        int_label_frm = ttk.Frame(scales_frm, padding=(0,2,0,0))
+        int_label_frm.grid(column=0, row=0, sticky="w")
+        (ttk.Label(int_label_frm, text='Intensity:')
+            .grid(column=0, row=0))
+        (ttk.Label(int_label_frm, textvariable=self.intensity_strv, width=5)
             .grid(column=1, row=0))
-        (ttk.Label(scales_frm, textvariable=self.intensity_strv, width=4)
-            .grid(column=2, row=0))
+        (ttk.Scale(scales_frm, from_=0, to=100, length=180, 
+                   variable=self.intensity_v).grid(column=0, row=1))
         # Duration
-        (ttk.Label(scales_frm, text='Duration (ms):')
-            .grid(column=0, row=1, sticky="ew"))
-        (ttk.Scale(scales_frm, from_=300, to=3000, variable=self.duration_v)
-            .grid(column=1, row=1))
-        (ttk.Label(scales_frm, textvariable=self.duration_strv, width=4)
-            .grid(column=2, row=1))
+        dur_label_frm = ttk.Frame(scales_frm, padding=(0,2,0,0))
+        dur_label_frm.grid(column=0, row=2, sticky="w")
+        (ttk.Label(dur_label_frm, text='Duration (s):')
+            .grid(column=0, row=0))
+        (ttk.Label(dur_label_frm, textvariable=self.duration_strv, width=5)
+            .grid(column=1, row=0))
+        (ttk.Scale(scales_frm, from_=3, to=300, length=180, 
+                   variable=self.duration_v).grid(column=0, row=3))
         # Type frame
         type_frm = ttk.Frame(ctrl_frm, padding=10)
         type_frm.grid(column=0, row=2)
@@ -63,14 +67,14 @@ class View:
         # Send
         (ttk.Button(ctrl_frm, text='Send', command=self.send)
             .grid(column=0, row=3, pady=5))
-        # Patterns
+        
+        # Patterns frame
         if patterns:
-            pattern_frm = ttk.LabelFrame(main_frm, text='Patterns')
-            pattern_frm.grid(column=0, row=1, padx=10, pady=10, sticky='ew')
-            self.load_patterns(pattern_frm)
+            patt_frm = ttk.LabelFrame(main_frm, text='Patterns')
+            patt_frm.grid(column=0, row=1, padx=10, pady=5, sticky='ew')
+            self.load_patterns(patt_frm)
+        
         # Footer
-        (ttk.Separator(main_frm, orient='horizontal')
-            .grid(column=0, row=98, sticky='ew'))
         footer_frm=ttk.Frame(main_frm, padding=10)
         footer_frm.grid(column=0, row=99)
         (ttk.Button(footer_frm, text='STOP ALL', command=self.stop_all)
@@ -83,7 +87,7 @@ class View:
         self.intensity_strv.set(intensity_str)
 
     def on_duration_change(self, var, index, mode):
-        duration_str = str(self.duration_v.get())
+        duration_str = str(self.duration_v.get()/10)
         self.duration_strv.set(duration_str)
 
     def get_shockers(self):
@@ -107,10 +111,10 @@ class View:
     # Load list of patterns into view as individual buttons
     def load_patterns(self, master):
         # Using constants for size may cause scaling issues
-        BUTTONS_PER_ROW = 3
-        PAD_X = 5
-        PAD_Y = 5
-        BTN_WIDTH = 8
+        BUTTONS_PER_ROW = 2
+        PAD_X = 2
+        PAD_Y = 2
+        BTN_WIDTH = 12
         for i in range(0, len(self.patterns)):
             col = i % BUTTONS_PER_ROW
             row = floor(i / BUTTONS_PER_ROW)
