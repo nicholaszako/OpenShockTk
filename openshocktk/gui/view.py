@@ -21,7 +21,7 @@ class View:
         self.duration_v.trace_add('write', self.on_duration_change)
         # String representation of current intensity
         self.intensity_strv = StringVar(value='10')
-        self.duration_strv = StringVar(value='100')
+        self.duration_strv = StringVar(value='10')
 
         # Ready to load gui elements
         self.root.title("OpenShockTk")
@@ -102,7 +102,7 @@ class View:
                           if s['name'] == shocker_name) 
         type_ = self.type_v.get()
         intensity = self.intensity_v.get()
-        duration = self.duration_v.get()
+        duration = self.duration_v.get()*100    # s/10 -> ms
 
         c = self.api.control
         prepped = c.get_prepared_req(shocker_id, type_, intensity, duration)
